@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/components/recipe_card.dart';
 import 'package:recipe_app/components/app_bar.dart';
 import 'package:recipe_app/data/category_data.dart';
-import 'package:recipe_app/data/meals_data.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,12 +18,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 4,
-        shadowColor: Colors.black45,
-        toolbarHeight: 120,
+        shadowColor: Colors.black,
+        toolbarHeight: 125,
         title: const AppBarContent(),
       ),
       body: Container(
-        margin: const EdgeInsets.all(5),
+        margin: const EdgeInsets.only(top: 15, right: 10, left: 10),
         child: GridView.builder(
           itemCount: availableCategories.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

@@ -19,7 +19,7 @@ class _AppBarState extends State<AppBarContent> {
           decoration: InputDecoration(
             filled: true,
             hintText: "Cari Kategori...",
-            suffixIcon: Icon(Icons.search),
+            suffixIcon: const Icon(Icons.search),
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             border: OutlineInputBorder(
@@ -37,10 +37,10 @@ class _AppBarState extends State<AppBarContent> {
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: ElevatedButton(
                           onPressed: () {},
-                          child: Text(element.name.toString()),
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.lightGreen,
                               foregroundColor: Colors.white),
+                          child: Text(element.name.toString()),
                         ),
                       ))
                   .toList()),
