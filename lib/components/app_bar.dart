@@ -38,7 +38,9 @@ class _AppBarState extends State<AppBarContent> {
                         child: ElevatedButton(
                           onPressed: () {},
                           child: Text(element.name.toString()),
-                          style: ElevatedButton.styleFrom(),
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.lightGreen,
+                              foregroundColor: Colors.white),
                         ),
                       ))
                   .toList()),
