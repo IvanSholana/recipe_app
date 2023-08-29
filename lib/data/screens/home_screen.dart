@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/components/recipe_card.dart';
 import 'package:recipe_app/components/app_bar.dart';
 import 'package:recipe_app/data/category_data.dart';
-import 'package:recipe_app/data/meals_data.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,11 +25,10 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(
         margin: const EdgeInsets.all(5),
         child: GridView.builder(
-          itemCount: availableCategories.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
           itemBuilder: (context, index) =>
-              RecipeCard(category: availableCategories[index]),
+              RecipeCard(category: dummyMeals[index]),
         ),
       ),
     );
