@@ -7,9 +7,15 @@ class RecipeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
-      color: Colors.purple,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          gradient:
+              const LinearGradient(colors: [Colors.green, Colors.lightGreen]),
+        ),
       ),
     );
   }

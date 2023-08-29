@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/components/recipe_card.dart';
+import 'package:recipe_app/components/app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,40 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 4,
         shadowColor: Colors.black45,
         toolbarHeight: 120,
-        title: Column(
-          children: [
-            TextField(
-              decoration: InputDecoration(
-                filled: true,
-                hintText: "Cari Kategori...",
-                suffixIcon: Icon(Icons.search),
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text("Hello World"),
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text("Hello World"),
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text("Hello World"),
-                )
-              ],
-            )
-          ],
-        ),
+        title: const AppBarContent(),
       ),
       body: Container(
         margin: const EdgeInsets.all(5),
