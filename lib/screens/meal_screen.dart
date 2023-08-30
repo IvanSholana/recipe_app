@@ -34,12 +34,26 @@ class _MealScreenState extends State<MealScreen> {
   void findRecipe(String pencarian) {
     setState(() {
       if (pencarian.isNotEmpty) {
-        showMeals =
-            widget.Meals.where((element) => element.title.contains(pencarian))
-                .toList();
+        showMeals = widget.Meals.where((element) =>
+            element.title.contains(pencarian) &&
+            (element.isVegan || !filter[mealsType.Vegan]!) &&
+            (element.isGlutenFree || !filter[mealsType.GlutenFree]!) &&
+            (element.isLactoseFree || !filter[mealsType.LactoseFree]!) &&
+            (element.isVegetarian || !filter[mealsType.Vegetarian]!)).toList();
       } else {
         showMeals = widget.Meals;
       }
+    });
+  }
+
+  void setFilterMeal() {
+    setState(() {
+      widget.setFilter();
+      showMeals = widget.Meals.where((element) =>
+          (element.isVegan || !filter[mealsType.Vegan]!) &&
+          (element.isGlutenFree || !filter[mealsType.GlutenFree]!) &&
+          (element.isLactoseFree || !filter[mealsType.LactoseFree]!) &&
+          (element.isVegetarian || !filter[mealsType.Vegetarian]!)).toList();
     });
   }
 
@@ -79,7 +93,7 @@ class _MealScreenState extends State<MealScreen> {
               shadowColor: Colors.black,
               toolbarHeight: 125,
               title: AppBarContent(
-                  findSomething: findRecipe, setFilter: widget.setFilter),
+                  findSomething: findRecipe, setFilter: setFilterMeal),
               automaticallyImplyLeading:
                   false, // This will remove the back arrow
             )
@@ -113,7 +127,7 @@ class _MealScreenState extends State<MealScreen> {
                 child: showMeals!.isNotEmpty
                     ? ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: widget.Meals.length,
+                        itemCount: showMeals!.length,
                         itemBuilder: (context, index) => Center(
                             child: MealCard(
                           meal: showMeals![index],

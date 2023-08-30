@@ -1,9 +1,12 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:recipe_app/data/meals_class.dart';
 import 'package:recipe_app/components/category_card.dart';
 import 'package:recipe_app/screens/meal_screen.dart';
 import 'package:recipe_app/data/meals_data.dart';
 import 'package:recipe_app/data/favorite_meals.dart';
+import 'package:recipe_app/data/filter_meals.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key, required this.allCategory, required this.setFilter});
@@ -23,7 +26,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void chooseCategory(String id, String category) {
     setState(() {
       meals = dummyMeals
-          .where((element) => element.categories.contains(id))
+          .where((element) =>
+              element.categories.contains(id) &&
+              (element.isVegan || !filter[mealsType.Vegan]!) &&
+              (element.isGlutenFree || !filter[mealsType.GlutenFree]!) &&
+              (element.isLactoseFree || !filter[mealsType.LactoseFree]!) &&
+              (element.isVegetarian || !filter[mealsType.Vegetarian]!))
           .toList();
     });
     Navigator.of(context).push(

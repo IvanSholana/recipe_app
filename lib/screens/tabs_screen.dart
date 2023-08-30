@@ -60,7 +60,12 @@ class _TabScreenState extends State<TabScreen> {
           setFilter: setFilters,
           title: "Favorite",
           Meals: dummyMeals
-              .where((element) => favoriteMeals.contains(element))
+              .where((element) =>
+                  favoriteMeals.contains(element) &&
+                  (element.isVegan || !filter[mealsType.Vegan]!) &&
+                  (element.isGlutenFree || !filter[mealsType.GlutenFree]!) &&
+                  (element.isLactoseFree || !filter[mealsType.LactoseFree]!) &&
+                  (element.isVegetarian || !filter[mealsType.Vegetarian]!))
               .toList(),
         );
       }
