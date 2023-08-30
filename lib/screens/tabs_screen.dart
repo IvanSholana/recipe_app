@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/data/meals_class.dart';
 import 'package:recipe_app/screens/home_screen.dart';
+import 'package:recipe_app/screens/meal_screen.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({super.key});
@@ -13,7 +15,13 @@ class TabScreen extends StatefulWidget {
 class _TabScreenState extends State<TabScreen> {
   Widget activeScreen = const HomeScreen();
   int selectedPage = 0;
-  
+
+  void setActiveScreen(index) {
+    setState(() {
+      selectedPage = index;
+      activeScreen = selectedPage == 0 ? HomeScreen() : MealScreen();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +41,9 @@ class _TabScreenState extends State<TabScreen> {
             label: "Favorite",
           )
         ],
-        onTap: (index) {},
+        onTap: (index) {
+          setActiveScreen(index);
+        },
       ),
     );
   }
