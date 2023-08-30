@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/screens/home_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:recipe_app/screens/tabs_screen.dart';
 
 final themeApp = ThemeData(
   useMaterial3: true,
@@ -22,7 +22,7 @@ class RecipeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: themeApp,
-      home: const HomeScreen(),
+      home: const TabScreen(),
     );
   }
 }
