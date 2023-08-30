@@ -3,19 +3,32 @@ import 'package:recipe_app/components/meal_card.dart';
 import 'package:recipe_app/data/meals_class.dart';
 import 'package:recipe_app/components/app_bar.dart';
 
-class MealScreen extends StatelessWidget {
-  const MealScreen({super.key, required this.Meals, required this.title});
+class MealScreen extends StatefulWidget {
+  MealScreen(
+      {super.key,
+      required this.Meals,
+      required this.title,
+      required this.findSomething});
   final List<Meal> Meals;
   final String title;
+  void Function(String something) findSomething;
+
+  @override
+  State<MealScreen> createState() => _MealScreenState();
+}
+
+class _MealScreenState extends State<MealScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: title != "Favorite"
+      appBar: widget.title != "Favorite"
           ? AppBar(
               elevation: 4,
               shadowColor: Colors.black,
               toolbarHeight: 125,
-              title: const AppBarContent(),
+              title: AppBarContent(
+                findSomething: widget.findSomething,
+              ),
               automaticallyImplyLeading:
                   false, // This will remove the back arrow
             )
@@ -34,7 +47,7 @@ class MealScreen extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.9,
               padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
               child: Text(
-                title,
+                widget.title,
                 style: Theme.of(context)
                     .textTheme
                     .headlineMedium!
@@ -49,16 +62,16 @@ class MealScreen extends StatelessWidget {
               child: Expanded(
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: Meals.length,
+                  itemCount: widget.Meals.length,
                   itemBuilder: (context, index) =>
-                      Center(child: MealCard(meal: Meals[index])),
+                      Center(child: MealCard(meal: widget.Meals[index])),
                 ),
               ),
             )
           ],
         ),
       ),
-      bottomNavigationBar: title != "Favorite"
+      bottomNavigationBar: widget.title != "Favorite"
           ? Container(
               margin: const EdgeInsets.only(
                   bottom: 25), // Sesuaikan dengan ketinggian yang diinginkan

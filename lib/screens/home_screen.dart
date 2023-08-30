@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/data/meals_class.dart';
-import 'package:recipe_app/data/meals_data.dart';
 import 'package:recipe_app/components/category_card.dart';
 import 'package:recipe_app/screens/meal_screen.dart';
+import 'package:recipe_app/data/meals_data.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key, required this.allCategory});
+  HomeScreen({Key? key, required this.allCategory}) : super(key: key);
 
-  List allCategory;
+  final List allCategory;
 
   @override
   State<HomeScreen> createState() {
@@ -17,6 +17,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late List<Meal> meals;
+
+  void findRecipe(String pencarian) {
+    print("Meals");
+    setState(() {
+      meals =
+          dummyMeals.where((element) => element.title == pencarian).toList();
+    });
+  }
+
   void chooseCategory(String id, String category) {
     setState(() {
       meals = dummyMeals
@@ -25,7 +34,11 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => MealScreen(Meals: meals, title: category),
+        builder: (context) => MealScreen(
+          Meals: meals, // Change Meals to meals
+          title: category,
+          findSomething: findRecipe,
+        ),
       ),
     );
   }
@@ -37,7 +50,10 @@ class _HomeScreenState extends State<HomeScreen> {
       child: GridView.builder(
         itemCount: widget.allCategory.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
+          crossAxisCount: 2,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+        ),
         itemBuilder: (context, index) => CategoryCard(
           category: widget.allCategory[index],
           chooseCategory: chooseCategory,
