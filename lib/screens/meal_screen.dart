@@ -5,13 +5,16 @@ import 'package:recipe_app/components/meal_card.dart';
 import 'package:recipe_app/data/meals_class.dart';
 import 'package:recipe_app/components/app_bar.dart';
 import 'package:recipe_app/data/favorite_meals.dart';
+import 'package:recipe_app/data/filter_meals.dart';
 
 class MealScreen extends StatefulWidget {
-  MealScreen({
-    super.key,
-    required this.Meals,
-    required this.title,
-  });
+  MealScreen(
+      {super.key,
+      required this.Meals,
+      required this.title,
+      required this.setFilter});
+
+  void Function() setFilter;
   final List<Meal> Meals;
   final String title;
 
@@ -39,6 +42,8 @@ class _MealScreenState extends State<MealScreen> {
       }
     });
   }
+
+  Map<mealsType, bool> newFilter = filter;
 
   void addFavorite(Meal meal) {
     setState(() {
@@ -74,8 +79,7 @@ class _MealScreenState extends State<MealScreen> {
               shadowColor: Colors.black,
               toolbarHeight: 125,
               title: AppBarContent(
-                findSomething: findRecipe,
-              ),
+                  findSomething: findRecipe, setFilter: widget.setFilter),
               automaticallyImplyLeading:
                   false, // This will remove the back arrow
             )

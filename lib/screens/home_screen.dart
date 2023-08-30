@@ -6,7 +6,8 @@ import 'package:recipe_app/data/meals_data.dart';
 import 'package:recipe_app/data/favorite_meals.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key, required this.allCategory}) : super(key: key);
+  HomeScreen({super.key, required this.allCategory, required this.setFilter});
+  void Function() setFilter;
 
   final List allCategory;
 
@@ -28,7 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => MealScreen(
-          Meals: meals, // Change Meals to meals
+          setFilter: widget.setFilter,
+          Meals: meals,
           title: category,
         ),
       ),
@@ -40,14 +42,14 @@ class _HomeScreenState extends State<HomeScreen> {
       if (favoriteMeals.contains(meal)) {
         favoriteMeals.remove(meal);
         ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Remove from Favorite"),
           duration: Duration(seconds: 2),
         ));
       } else {
         favoriteMeals.add(meal);
         ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Added to Favorite"),
           duration: Duration(seconds: 2),
         ));

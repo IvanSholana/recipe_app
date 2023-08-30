@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/data/filter_meals.dart';
 
 class AppBarContent extends StatefulWidget {
-  AppBarContent({super.key, required this.findSomething});
+  AppBarContent(
+      {super.key, required this.findSomething, required this.setFilter});
 
   void Function(String something) findSomething;
+  void Function() setFilter;
 
   @override
   State<AppBarContent> createState() {
@@ -54,16 +56,31 @@ class _AppBarState extends State<AppBarContent> {
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: mealsType.values
-                  .map((element) => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.lightGreen,
-                              foregroundColor: Colors.white),
-                          child: Text(element.name.toString()),
-                        ),
-                      ))
+                  .map(
+                    (element) => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            filter[element] = !filter[element]!;
+                            widget.setFilter();
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                            side: BorderSide(
+                              color: filter[element]!
+                                  ? Colors.white
+                                  : Colors.green,
+                              width: 1.0,
+                            ),
+                            backgroundColor:
+                                filter[element]! ? Colors.green : Colors.white,
+                            foregroundColor:
+                                filter[element]! ? Colors.white : Colors.green),
+                        child: Text(element.name.toString()),
+                      ),
+                    ),
+                  )
                   .toList()),
         )
       ],
