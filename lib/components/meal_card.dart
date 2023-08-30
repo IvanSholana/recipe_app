@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/data/meals_class.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:recipe_app/screens/detail_screen.dart';
 
 class MealCard extends StatelessWidget {
   const MealCard({super.key, required this.meal});
@@ -18,7 +19,9 @@ class MealCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         onTap: () {
-          // Handle the tap on the card here
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => DetailScreen(meal: meal),
+          ));
         },
         child: Stack(
           children: [

@@ -4,6 +4,7 @@ import 'package:recipe_app/data/meals_data.dart';
 import 'package:recipe_app/screens/home_screen.dart';
 import 'package:recipe_app/screens/meal_screen.dart';
 import 'package:recipe_app/components/app_bar.dart';
+import 'package:recipe_app/data/favorite_meals.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({Key? key});
@@ -19,7 +20,6 @@ class _TabScreenState extends State<TabScreen> {
   int selectedPage = 0;
 
   void findRecipe(String pencarian) {
-    print(pencarian);
     setState(() {
       if (pencarian.isNotEmpty) {
         activeScreen = HomeScreen(
@@ -49,7 +49,9 @@ class _TabScreenState extends State<TabScreen> {
       } else if (selectedPage == 1) {
         activeScreen = MealScreen(
           title: "Favorite",
-          Meals: dummyMeals.sublist(5).toList(),
+          Meals: dummyMeals
+              .where((element) => favoriteMeals.contains(element))
+              .toList(),
         );
       }
     });
