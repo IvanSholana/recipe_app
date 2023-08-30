@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:recipe_app/data/category_class.dart';
 
-class RecipeCard extends StatelessWidget {
-  const RecipeCard({super.key, required this.category});
+class CategoryCard extends StatelessWidget {
+  CategoryCard(
+      {super.key, required this.category, required this.chooseCategory});
 
   final Category category;
+
+  void Function(String category, String title) chooseCategory;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -13,7 +16,9 @@ class RecipeCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       clipBehavior: Clip.hardEdge,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          chooseCategory(category.id, category.title);
+        },
         child: Stack(
           children: [
             Positioned.fill(
@@ -30,11 +35,13 @@ class RecipeCard extends StatelessWidget {
               child: Container(
                 alignment: Alignment.bottomLeft,
                 height: 70,
-                decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [Colors.lightGreen, Colors.transparent],
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter)),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.transparent, Colors.black.withOpacity(0.7)],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: Text(

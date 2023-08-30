@@ -3,7 +3,7 @@ import 'package:recipe_app/data/meals_class.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealCard extends StatelessWidget {
-  const MealCard({Key? key, required this.meal}) : super(key: key);
+  const MealCard({super.key, required this.meal});
 
   final Meal meal;
 
