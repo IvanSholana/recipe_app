@@ -18,14 +18,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late List<Meal> meals;
 
-  void findRecipe(String pencarian) {
-    print("Meals");
-    setState(() {
-      meals =
-          dummyMeals.where((element) => element.title == pencarian).toList();
-    });
-  }
-
   void chooseCategory(String id, String category) {
     setState(() {
       meals = dummyMeals
@@ -37,7 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context) => MealScreen(
           Meals: meals, // Change Meals to meals
           title: category,
-          findSomething: findRecipe,
         ),
       ),
     );

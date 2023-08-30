@@ -1,23 +1,44 @@
+// ignore_for_file: must_be_immutable, non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:recipe_app/components/meal_card.dart';
 import 'package:recipe_app/data/meals_class.dart';
 import 'package:recipe_app/components/app_bar.dart';
 
 class MealScreen extends StatefulWidget {
-  MealScreen(
-      {super.key,
-      required this.Meals,
-      required this.title,
-      required this.findSomething});
+  MealScreen({
+    super.key,
+    required this.Meals,
+    required this.title,
+  });
   final List<Meal> Meals;
   final String title;
-  void Function(String something) findSomething;
 
   @override
   State<MealScreen> createState() => _MealScreenState();
 }
 
 class _MealScreenState extends State<MealScreen> {
+  List<Meal>? showMeals;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    showMeals = widget.Meals;
+  }
+
+  void findRecipe(String pencarian) {
+    setState(() {
+      if (pencarian.isNotEmpty) {
+        showMeals =
+            widget.Meals.where((element) => element.title.contains(pencarian))
+                .toList();
+      } else {
+        showMeals = widget.Meals;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,48 +48,55 @@ class _MealScreenState extends State<MealScreen> {
               shadowColor: Colors.black,
               toolbarHeight: 125,
               title: AppBarContent(
-                findSomething: widget.findSomething,
+                findSomething: findRecipe,
               ),
               automaticallyImplyLeading:
                   false, // This will remove the back arrow
             )
           : null,
       body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(bottom: 20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                gradient: const LinearGradient(
-                    colors: [Colors.green, Colors.lightGreen]),
-              ),
-              width: MediaQuery.of(context).size.width * 0.9,
-              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-              child: Text(
-                widget.title,
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineMedium!
-                    .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-            ),
-            const SizedBox(height: 5),
-            Container(
-              height: 500,
-              margin: const EdgeInsets.symmetric(horizontal: 16),
-              width: MediaQuery.of(context).size.width,
-              child: Expanded(
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: widget.Meals.length,
-                  itemBuilder: (context, index) =>
-                      Center(child: MealCard(meal: widget.Meals[index])),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(bottom: 20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  gradient: const LinearGradient(
+                      colors: [Colors.green, Colors.lightGreen]),
+                ),
+                width: MediaQuery.of(context).size.width * 0.9,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                child: Text(
+                  widget.title,
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
-            )
-          ],
+              const SizedBox(height: 5),
+              Container(
+                height: 500,
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                width: MediaQuery.of(context).size.width,
+                child: showMeals!.isNotEmpty
+                    ? ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: widget.Meals.length,
+                        itemBuilder: (context, index) =>
+                            Center(child: MealCard(meal: showMeals![index])),
+                      )
+                    : Center(
+                        child: Text(
+                          "Ups Sorry, There is nothing to show here...",
+                          style: Theme.of(context).textTheme.bodyLarge,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+              )
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: widget.title != "Favorite"

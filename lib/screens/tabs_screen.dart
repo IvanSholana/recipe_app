@@ -19,6 +19,7 @@ class _TabScreenState extends State<TabScreen> {
   int selectedPage = 0;
 
   void findRecipe(String pencarian) {
+    print(pencarian);
     setState(() {
       if (pencarian.isNotEmpty) {
         activeScreen = HomeScreen(
@@ -47,7 +48,6 @@ class _TabScreenState extends State<TabScreen> {
         activeScreen = HomeScreen(allCategory: availableCategories);
       } else if (selectedPage == 1) {
         activeScreen = MealScreen(
-          findSomething: findRecipe,
           title: "Favorite",
           Meals: dummyMeals.sublist(5).toList(),
         );
