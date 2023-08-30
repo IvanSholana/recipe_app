@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/data/meals_class.dart';
+import 'package:recipe_app/data/meals_data.dart';
 import 'package:recipe_app/screens/home_screen.dart';
 import 'package:recipe_app/screens/meal_screen.dart';
+import 'package:recipe_app/components/app_bar.dart';
+import 'package:recipe_app/data/category_data.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({super.key});
@@ -13,19 +15,34 @@ class TabScreen extends StatefulWidget {
 }
 
 class _TabScreenState extends State<TabScreen> {
-  Widget activeScreen = const HomeScreen();
+  Widget activeScreen = HomeScreen(
+    allCategory: availableCategories,
+  );
   int selectedPage = 0;
 
   void setActiveScreen(index) {
     setState(() {
       selectedPage = index;
-      activeScreen = selectedPage == 0 ? HomeScreen() : MealScreen();
+      activeScreen = selectedPage == 0
+          ? HomeScreen(
+              allCategory: availableCategories,
+            )
+          : MealScreen(
+              title: "Favorite",
+              Meals: dummyMeals.sublist(5).toList(),
+            );
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 4,
+        shadowColor: Colors.black,
+        toolbarHeight: 125,
+        title: const AppBarContent(),
+      ),
       body: activeScreen,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedPage,
