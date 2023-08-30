@@ -5,9 +5,10 @@ import 'package:recipe_app/screens/home_screen.dart';
 import 'package:recipe_app/screens/meal_screen.dart';
 import 'package:recipe_app/components/app_bar.dart';
 import 'package:recipe_app/data/favorite_meals.dart';
+import 'package:recipe_app/data/meals_class.dart';
 
 class TabScreen extends StatefulWidget {
-  const TabScreen({Key? key});
+  const TabScreen({super.key});
 
   @override
   State<TabScreen> createState() {
@@ -40,6 +41,8 @@ class _TabScreenState extends State<TabScreen> {
     super.initState();
     activeScreen = HomeScreen(allCategory: availableCategories);
   }
+
+  
 
   void setActiveScreen(int index) {
     setState(() {

@@ -4,7 +4,8 @@ import 'package:transparent_image/transparent_image.dart';
 import 'package:recipe_app/screens/detail_screen.dart';
 
 class MealCard extends StatelessWidget {
-  const MealCard({super.key, required this.meal});
+  MealCard({super.key, required this.meal, required this.addFavorite});
+  void Function(Meal meal) addFavorite;
 
   final Meal meal;
 
@@ -20,7 +21,8 @@ class MealCard extends StatelessWidget {
       child: InkWell(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => DetailScreen(meal: meal),
+            builder: (context) =>
+                DetailScreen(meal: meal, addFavorite: addFavorite),
           ));
         },
         child: Stack(

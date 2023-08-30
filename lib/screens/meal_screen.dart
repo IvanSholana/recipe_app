@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/components/meal_card.dart';
 import 'package:recipe_app/data/meals_class.dart';
 import 'package:recipe_app/components/app_bar.dart';
+import 'package:recipe_app/data/favorite_meals.dart';
 
 class MealScreen extends StatefulWidget {
   MealScreen({
@@ -35,6 +36,31 @@ class _MealScreenState extends State<MealScreen> {
                 .toList();
       } else {
         showMeals = widget.Meals;
+      }
+    });
+  }
+
+  void addFavorite(Meal meal) {
+    setState(() {
+      if (favoriteMeals.contains(meal)) {
+        favoriteMeals.remove(meal);
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Remove from Favorite"),
+          duration: Duration(seconds: 2),
+        ));
+      } else {
+        favoriteMeals.add(meal);
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Added to Favorite"),
+          duration: Duration(seconds: 2),
+        ));
+      }
+      if (widget.title == "Favorite") {
+        showMeals =
+            widget.Meals.where((element) => favoriteMeals.contains(element))
+                .toList();
       }
     });
   }
@@ -84,8 +110,11 @@ class _MealScreenState extends State<MealScreen> {
                     ? ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: widget.Meals.length,
-                        itemBuilder: (context, index) =>
-                            Center(child: MealCard(meal: showMeals![index])),
+                        itemBuilder: (context, index) => Center(
+                            child: MealCard(
+                          meal: showMeals![index],
+                          addFavorite: addFavorite,
+                        )),
                       )
                     : Center(
                         child: Text(

@@ -5,7 +5,8 @@ import 'package:transparent_image/transparent_image.dart';
 import 'package:recipe_app/data/filter_meals.dart';
 
 class DetailScreen extends StatefulWidget {
-  DetailScreen({Key? key, required this.meal}) : super(key: key);
+  DetailScreen({super.key, required this.meal, required this.addFavorite});
+  void Function(Meal meal) addFavorite;
   final Meal meal;
 
   @override
@@ -32,21 +33,7 @@ class _DetailScreenState extends State<DetailScreen> {
           IconButton(
             onPressed: () {
               setState(() {
-                if (favoriteMeals.contains(widget.meal)) {
-                  favoriteMeals.remove(widget.meal);
-                  ScaffoldMessenger.of(context).clearSnackBars();
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("Added to Favirite"),
-                    duration: Duration(seconds: 2),
-                  ));
-                } else {
-                  favoriteMeals.add(widget.meal);
-                  ScaffoldMessenger.of(context).clearSnackBars();
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("Remove from Favirite"),
-                    duration: Duration(seconds: 2),
-                  ));
-                }
+                widget.addFavorite(widget.meal);
               });
             },
             icon: Icon(
